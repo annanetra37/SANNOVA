@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>{% block title %}Credential intake{% endblock %}</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="mark">Triple i</span>
+    <span class="sub">Secure credential intake</span>
+  </div>
+</header>
+<main class="wrap">
+{% block content %}{% endblock %}
+</main>
+<footer class="wrap">
+  <p>Credentials submitted here are written directly to an encrypted Azure
+  Key Vault. They are not stored on this server, not written to any database,
+  and not recorded in any log. Every access is audited.</p>
+</footer>
+</body>
+</html>

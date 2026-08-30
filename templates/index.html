@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Welcome, {{ vendor_name }}</h1>
+<p class="lead">Choose a platform to submit credentials for. You can do them
+one at a time, in any order, and come back to this page whenever you have
+another set.</p>
+
+<ul class="platforms">
+{% for p in platforms %}
+  <li>
+    <a href="/s/{{ token }}/{{ p.slug }}">
+      <strong>{{ p.name }}</strong>
+      <span>{{ p.brands }}</span>
+    </a>
+  </li>
+{% endfor %}
+</ul>
+
+<div class="note">
+  <h2>How your credentials are protected</h2>
+  <ul>
+    <li>Sent over an encrypted connection and written straight into Azure
+        Key Vault.</li>
+    <li>This application holds <strong>write-only</strong> access &mdash; it
+        cannot read back anything it has stored, including its own
+        submissions.</li>
+    <li>Nothing is saved to a database or a file on this server.</li>
+    <li>Values never appear in logs.</li>
+    <li>Every read by our data service is logged and auditable.</li>
+    <li>Ask us to revoke any credential at any time and we will delete it.</li>
+  </ul>
+</div>
+{% endblock %}
