@@ -40,6 +40,9 @@ Railway detects the Python project and uses `railway.json` — Nixpacks build,
 `uvicorn` start command, `/healthz` health check. Nothing else to configure
 except the variables.
 
+**[DEPLOY.md](DEPLOY.md) walks through where every value below comes from,
+click by click.** The short version:
+
 Set these in the service's Variables tab:
 
 | Variable | Value |
