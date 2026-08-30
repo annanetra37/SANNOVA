@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="done">
+  <h1>Received</h1>
+  <p>{{ count }} value{{ '' if count == 1 else 's' }} for
+     <strong>{{ platform.name }}</strong> {{ 'has' if count == 1 else 'have' }}
+     been written to the vault.</p>
+  <p class="muted">For your security we don't display submitted values back to
+  you. If you need to correct something, just submit the form again &mdash; the
+  new value replaces the old one.</p>
+  <p><a class="button" href="/s/{{ token }}">Submit another platform</a></p>
+</div>
+{% endblock %}

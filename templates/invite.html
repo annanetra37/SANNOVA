@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Invite link for {{ vendor }}</h1>
+<p>Valid for {{ days }} days. Send this over a channel you trust.</p>
+<pre class="url">{{ url }}</pre>
+{% endblock %}
