@@ -1,41 +1,84 @@
 {% extends "base.html" %}
 {% block title %}{{ platform.name }}{% endblock %}
 {% block content %}
-<p class="back"><a href="/s/{{ token }}">&larr; All platforms</a></p>
+
+<a class="back" href="/s/{{ token }}">
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"
+       stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+       stroke-linejoin="round" aria-hidden="true">
+    <path d="M10 3L5 8l5 5"/>
+  </svg>
+  All platforms
+</a>
+
+<p class="eyebrow">{{ vendor_name }}</p>
 <h1>{{ platform.name }}</h1>
 <p class="brands">{{ platform.brands }}</p>
 
 {% if platform.guidance %}
-<div class="guidance"><p>{{ platform.guidance }}</p></div>
+<div class="guidance">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+       stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+       stroke-linejoin="round" aria-hidden="true">
+    <circle cx="8" cy="8" r="6.5"/><path d="M8 7.25v4M8 4.75v.5"/>
+  </svg>
+  <p>{{ platform.guidance }}</p>
+</div>
 {% endif %}
 
 {% if error %}
-<div class="error"><p>{{ error }}</p></div>
+<div class="error" role="alert">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+       stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+       stroke-linejoin="round" aria-hidden="true">
+    <circle cx="8" cy="8" r="6.5"/><path d="M8 4.75v4M8 11v.5"/>
+  </svg>
+  <p>{{ error }}</p>
+</div>
 {% endif %}
 
 <form method="post" autocomplete="off">
 {% for f in platform.fields %}
   <div class="field">
     <label for="{{ f.key }}">
-      {{ f.label }}{% if not f.required %} <em>(optional)</em>{% endif %}
+      {{ f.label }}{% if not f.required %} <span class="optional">(optional)</span>{% endif %}
     </label>
-    {% if f.help %}<p class="help">{{ f.help }}</p>{% endif %}
+    {% if f.help %}<p class="help" id="{{ f.key }}-help">{{ f.help }}</p>{% endif %}
     {% if f.kind == "textarea" %}
       <textarea id="{{ f.key }}" name="{{ f.key }}" rows="4"
-                autocomplete="off" spellcheck="false"></textarea>
+                autocomplete="off" spellcheck="false"
+                {% if f.required %}required{% endif %}
+                {% if f.help %}aria-describedby="{{ f.key }}-help"{% endif %}></textarea>
     {% elif f.kind == "select" %}
-      <select id="{{ f.key }}" name="{{ f.key }}">
-        <option value="">Select...</option>
+      <select id="{{ f.key }}" name="{{ f.key }}"
+              {% if f.required %}required{% endif %}
+              {% if f.help %}aria-describedby="{{ f.key }}-help"{% endif %}>
+        <option value="">Select…</option>
         {% for o in f.options %}<option value="{{ o }}">{{ o }}</option>{% endfor %}
       </select>
     {% else %}
       <input id="{{ f.key }}" name="{{ f.key }}"
              type="{{ 'password' if f.kind == 'password' else 'text' }}"
              autocomplete="off" spellcheck="false"
+             {% if f.required %}required{% endif %}
+             {% if f.help %}aria-describedby="{{ f.key }}-help"{% endif %}
              placeholder="{{ f.placeholder }}">
     {% endif %}
   </div>
 {% endfor %}
-  <button type="submit">Submit securely</button>
+
+  <div class="form-actions">
+    <button class="btn" type="submit">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none"
+           stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+           stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="7" width="10" height="7" rx="1.5"/>
+        <path d="M5.5 7V4.75a2.5 2.5 0 015 0V7"/>
+      </svg>
+      Submit securely
+    </button>
+    <span class="note-inline">Written straight to the vault. Never stored here.</span>
+  </div>
 </form>
+
 {% endblock %}

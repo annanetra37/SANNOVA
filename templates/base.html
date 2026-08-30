@@ -4,23 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>{% block title %}Credential intake{% endblock %}</title>
+<meta name="theme-color" content="#1f6f4f">
+<title>{% block title %}Credential intake{% endblock %} — Triple i</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-<header>
+
+<header class="site-head">
   <div class="wrap">
-    <span class="mark">Triple i</span>
-    <span class="sub">Secure credential intake</span>
+    {# Replace this span with:  <img src="/static/logo.svg" alt="Triple i" class="logo">  #}
+    <span class="wordmark">Triple<span class="dot"> i</span></span>
+    <span class="head-rule"></span>
+    <span class="head-label">Secure credential intake</span>
   </div>
 </header>
+
 <main class="wrap">
 {% block content %}{% endblock %}
 </main>
-<footer class="wrap">
+
+<footer class="site-foot wrap">
   <p>Credentials submitted here are written directly to an encrypted Azure
   Key Vault. They are not stored on this server, not written to any database,
   and not recorded in any log. Every access is audited.</p>
 </footer>
+
 </body>
 </html>

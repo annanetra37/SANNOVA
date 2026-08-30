@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Brand colour is hardcoded here: SVG cannot read the CSS custom
+       properties in style.css. Update this fill alongside --brand. -->
+  <rect width="32" height="32" rx="7" fill="#1f6f4f"/>
+  <g fill="#ffffff">
+    <rect x="8"  y="13" width="3" height="11" rx="1.5"/>
+    <rect x="14.5" y="13" width="3" height="11" rx="1.5"/>
+    <rect x="21" y="13" width="3" height="11" rx="1.5"/>
+    <circle cx="22.5" cy="9" r="1.9"/>
+  </g>
+</svg>

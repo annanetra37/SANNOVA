@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% block title %}Choose a platform{% endblock %}
 {% block content %}
+
 <h1>Welcome, {{ vendor_name }}</h1>
 <p class="lead">Choose a platform to submit credentials for. You can do them
 one at a time, in any order, and come back to this page whenever you have
@@ -8,26 +10,58 @@ another set.</p>
 <ul class="platforms">
 {% for p in platforms %}
   <li>
-    <a href="/s/{{ token }}/{{ p.slug }}">
-      <strong>{{ p.name }}</strong>
-      <span>{{ p.brands }}</span>
+    <a class="platform" href="/s/{{ token }}/{{ p.slug }}">
+      <span class="platform-text">
+        <span class="platform-name">{{ p.name }}</span>
+        <span class="platform-brands">{{ p.brands }}</span>
+      </span>
+      <svg class="platform-arrow" width="16" height="16" viewBox="0 0 16 16"
+           fill="none" stroke="currentColor" stroke-width="1.75"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 3l5 5-5 5"/>
+      </svg>
     </a>
   </li>
 {% endfor %}
 </ul>
 
-<div class="note">
-  <h2>How your credentials are protected</h2>
+<section class="trust">
+  <h2>
+    <svg width="17" height="17" viewBox="0 0 16 16" fill="none"
+         stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+         stroke-linejoin="round" aria-hidden="true">
+      <path d="M8 1.5l5 2v4c0 3-2.1 5.6-5 7-2.9-1.4-5-4-5-7v-4l5-2z"/>
+    </svg>
+    How your credentials are protected
+  </h2>
   <ul>
-    <li>Sent over an encrypted connection and written straight into Azure
-        Key Vault.</li>
-    <li>This application holds <strong>write-only</strong> access &mdash; it
-        cannot read back anything it has stored, including its own
-        submissions.</li>
-    <li>Nothing is saved to a database or a file on this server.</li>
-    <li>Values never appear in logs.</li>
-    <li>Every read by our data service is logged and auditable.</li>
-    <li>Ask us to revoke any credential at any time and we will delete it.</li>
+    {% for point in [
+      "Sent over an encrypted connection and written straight into Azure Key Vault.",
+      "Nothing is saved to a database or to a file on this server.",
+      "Values never appear in logs.",
+      "Every read by our data service is logged and auditable.",
+      "Ask us to revoke any credential at any time and we will delete it."
+    ] %}
+    <li>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round"
+           stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 8.5l3.5 3.5L13 5"/>
+      </svg>
+      <span>{{ point }}</span>
+    </li>
+    {% endfor %}
+    <li>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round"
+           stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 8.5l3.5 3.5L13 5"/>
+      </svg>
+      <span>This application holds <strong>write-only</strong> access — it
+      cannot read back anything it has stored, including its own
+      submissions.</span>
+    </li>
   </ul>
-</div>
+</section>
+
 {% endblock %}
