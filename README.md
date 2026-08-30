@@ -40,6 +40,9 @@ Railway detects the Python project and uses `railway.json` — Nixpacks build,
 `uvicorn` start command, `/healthz` health check. Nothing else to configure
 except the variables.
 
+**[DEPLOY.md](DEPLOY.md) walks through where every value below comes from,
+click by click.** The short version:
+
 Set these in the service's Variables tab:
 
 | Variable | Value |
@@ -57,6 +60,25 @@ without `SECRET_KEY`, so a missing variable fails the deploy loudly rather
 than running unprotected.
 
 Changing `SECRET_KEY` invalidates every invite link already sent.
+
+## Applying the brand
+
+Every brand decision lives in the `:root` block at the top of
+`static/style.css` — colours, type stack, corner radii. Change those tokens
+and the whole UI follows; nothing else needs editing.
+
+Two things sit outside that block because they cannot read CSS variables:
+
+- `static/favicon.svg` — the fill is hardcoded, update it alongside `--brand`.
+- `templates/base.html` — swap the `.wordmark` span for
+  `<img src="/static/logo.svg" alt="Triple i" class="logo">` once you have
+  the real mark. The header sizing already allows for it.
+
+The Content-Security-Policy is `style-src 'self'` and `script-src 'none'`,
+so remote stylesheets (Google Fonts) and all JavaScript are blocked
+deliberately. To use the brand typeface, put the `.woff2` files in
+`static/` and add an `@font-face` rule — self-hosted files are allowed.
+Do not loosen the CSP to load a font.
 
 ## Adding a platform
 

@@ -1,13 +1,25 @@
 {% extends "base.html" %}
+{% block title %}Received{% endblock %}
 {% block content %}
+
 <div class="done">
+  <span class="done-mark">
+    <svg width="26" height="26" viewBox="0 0 16 16" fill="none"
+         stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+         stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 8.5l3.5 3.5L13 5"/>
+    </svg>
+  </span>
+
   <h1>Received</h1>
   <p>{{ count }} value{{ '' if count == 1 else 's' }} for
      <strong>{{ platform.name }}</strong> {{ 'has' if count == 1 else 'have' }}
      been written to the vault.</p>
   <p class="muted">For your security we don't display submitted values back to
-  you. If you need to correct something, just submit the form again &mdash; the
-  new value replaces the old one.</p>
-  <p><a class="button" href="/s/{{ token }}">Submit another platform</a></p>
+  you. If you need to correct something, just submit the form again — the new
+  value replaces the old one.</p>
+
+  <a class="btn btn-quiet" href="/s/{{ token }}">Submit another platform</a>
 </div>
+
 {% endblock %}

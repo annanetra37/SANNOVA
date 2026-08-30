@@ -1,6 +1,12 @@
 {% extends "base.html" %}
+{% block title %}Invite link{% endblock %}
 {% block content %}
+
+<p class="eyebrow">Admin</p>
 <h1>Invite link for {{ vendor }}</h1>
-<p>Valid for {{ days }} days. Send this over a channel you trust.</p>
-<pre class="url">{{ url }}</pre>
+<p class="lead">Valid for {{ days }} days. Send it over a channel you trust —
+anyone holding this link can submit credentials as {{ vendor }}.</p>
+
+<code class="url">{{ url }}</code>
+
 {% endblock %}
