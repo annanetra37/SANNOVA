@@ -231,9 +231,19 @@ boot. Do a real test submission after any change to them.
 
 ## When something fails
 
-Submissions return the generic 503 page on any vault failure, and
-`vault.py` logs the exception *type* but never the value. Check the Railway
-deploy logs for a `keyvault write failed` line:
+**Start here:** hit the vault diagnostic, which writes a probe secret and
+reports the real Azure error rather than the generic page a vendor sees.
+
+    /admin/vault-check?key=<ADMIN_TOKEN>
+
+`{"ok": true}` means credentials, network and the Set permission all work
+and a real submission will succeed. Otherwise the `detail` field names the
+cause. A 404 here means `ADMIN_TOKEN` is wrong, not that the vault failed.
+
+Submissions themselves return the generic 503 page on any vault failure —
+the vendor is never shown the reason. Check the Railway deploy logs for a
+`keyvault write failed` line, which now carries the HTTP status and Azure's
+own message:
 
 | Logged type | Almost always means |
 |---|---|

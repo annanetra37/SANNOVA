@@ -35,6 +35,12 @@ logging.basicConfig(
 )
 log = logging.getLogger("intake")
 
+# The Azure SDK logs a line per request header at INFO, which buries our own
+# lines in the deploy log. It never logs request bodies unless explicitly
+# enabled, so no submitted value is exposed either way — this is about
+# keeping the log readable.
+logging.getLogger("azure").setLevel(logging.WARNING)
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY:
     raise RuntimeError("SECRET_KEY must be set")
@@ -165,6 +171,24 @@ async def admin_invite(request: Request, key: str = "", vendor: str = "",
         {"url": f"{base}/s/{token}",
          "vendor": vendor, "days": TOKEN_MAX_AGE // 86400},
     )
+
+
+@app.get("/admin/vault-check")
+async def admin_vault_check(key: str = ""):
+    """
+    Prove the Key Vault path works without submitting the form.
+
+    Protected by ADMIN_TOKEN. Writes a probe secret, which exercises exactly
+    what a real submission does: credentials, network, and the Set
+    permission. Reports the underlying Azure error, which the vendor-facing
+    503 page deliberately does not.
+    """
+    if not ADMIN_TOKEN or not secrets.compare_digest(key, ADMIN_TOKEN):
+        raise HTTPException(404, "Not found")
+
+    ok, detail = vault.health()
+    return JSONResponse({"ok": ok, "detail": detail},
+                        status_code=200 if ok else 503)
 
 
 @app.get("/s/{token}", response_class=HTMLResponse)
